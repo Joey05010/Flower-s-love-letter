@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunflower Love Note</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital@0;1&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sun-yellow: #ffc300;
+            --deep-orange: #ff9500;
+            --sky-blue: #e0f2fe;
+            --field-green: #2d6a4f;
+            --warm-white: #fffcf2;
+        }
+
+        body {
+            background-color: var(--warm-white);
+            background: linear-gradient(to bottom, #fef3c7 0%, #fffcf2 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cursive { font-family: 'Dancing Script', cursive; }
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* Floating Sunflowers & Hearts Animation */
+        .floating-item {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+            animation: floatUp 7s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Flower Styling - Responsive scaling */
+        .flower-corner {
+            position: fixed;
+            bottom: -10px;
+            width: 150px; /* Smaller for mobile */
+            height: auto;
+            z-index: 10;
+            pointer-events: none;
+            animation: sway 4s ease-in-out infinite alternate;
+        }
+
+        @media (min-width: 768px) {
+            .flower-corner { width: 240px; }
+        }
+
+        .flower-left { left: -10px; }
+        .flower-right { right: -10px; transform: scaleX(-1); }
+        .flower-right-anim { animation: sway-reverse 4.5s ease-in-out infinite alternate; }
+
+        @keyframes sway {
+            from { transform: rotate(-2deg) translateY(0); }
+            to { transform: rotate(5deg) translateY(-8px); }
+        }
+
+        @keyframes sway-reverse {
+            from { transform: scaleX(-1) rotate(-2deg) translateY(0); }
+            to { transform: scaleX(-1) rotate(5deg) translateY(-8px); }
+        }
+
+        /* Envelope Styling - Responsive sizing */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 280px; /* Mobile default */
+            height: 180px;
+        }
+
+        @media (min-width: 768px) {
+            .envelope-wrapper {
+                width: 320px;
+                height: 200px;
+            }
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #e67e22;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 15px 35px rgba(230, 126, 34, 0.2);
+            overflow: visible;
+        }
+
+        /* Adjusted border values for responsiveness */
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 4;
+            border-top: 100px solid #f39c12;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            transform-origin: top;
+            transition: all 0.5s ease-in-out;
+        }
+
+        @media (min-width: 768px) {
+            .envelope::before {
+                border-top: 110px solid #f39c12;
+                border-left: 160px solid transparent;
+                border-right: 160px solid transparent;
+            }
+        }
+
+        .envelope::after {
+            content: "";
+            position: absolute;
+            z-index: 3;
+            border-top: 90px solid transparent;
+            border-left: 140px solid #f1c40f;
+            border-right: 140px solid #f1c40f;
+            border-bottom: 90px solid #f1c40f;
+            bottom: 0;
+            border-radius: 0 0 5px 5px;
+        }
+
+        @media (min-width: 768px) {
+            .envelope::after {
+                border-top: 100px solid transparent;
+                border-left: 160px solid #f1c40f;
+                border-right: 160px solid #f1c40f;
+                border-bottom: 100px solid #f1c40f;
+            }
+        }
+
+        .letter {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            background: white;
+            z-index: 1;
+            transition: all 0.5s ease-in-out;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(0);
+            border-top: 4px solid var(--sun-yellow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .letter { padding: 25px; top: 10px; left: 10px; right: 10px; bottom: 10px; }
+        }
+
+        .opened .envelope::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .opened .letter {
+            transform: translateY(-140px);
+            height: 400px;
+            z-index: 5;
+            opacity: 1;
+            overflow-y: auto;
+        }
+
+        @media (min-width: 768px) {
+            .opened .letter {
+                transform: translateY(-160px);
+                height: 480px;
+            }
+        }
+
+        .seal-img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            z-index: 6;
+            transition: opacity 0.3s ease;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15));
+            object-fit: contain;
+        }
+
+        @media (min-width: 768px) {
+            .seal-img { width: 65px; height: 65px; top: 75px; left: 130px; transform: none; }
+        }
+
+        .opened .seal-img {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .letter::-webkit-scrollbar { width: 5px; }
+        .letter::-webkit-scrollbar-thumb { background: var(--sun-yellow); border-radius: 10px; }
+        
+        /* Mobile touch fix for letter scroll */
+        .opened .letter {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body class="p-4">
+
+    <div id="floating-container"></div>
+
+    <!-- Sunflower Corner Assets -->
+    <img src="assets/sufower ful.svg" 
+         alt="Sunflower Left" 
+         class="flower-corner flower-left" 
+         onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%235d4037\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(0 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(45 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(90 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(135 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(180 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(225 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(270 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(315 50 50)\'/></svg>'">
+
+    <img src="assets/sufower ful.svg" 
+         alt="Sunflower Right" 
+         class="flower-corner flower-right flower-right-anim" 
+         onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%235d4037\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(0 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(45 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(90 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(135 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(180 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(225 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(270 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(315 50 50)\'/></svg>'">
+
+    <div class="z-20 text-center flex flex-col items-center w-full max-w-md">
+        <h1 class="serif text-3xl md:text-5xl text-yellow-700 mb-12 md:mb-20 drop-shadow-sm px-4">Happy Valentines day my angel</h1>
+        
+        <div class="envelope-wrapper" onclick="toggleLetter(this)">
+            <!-- Custom Seal Asset -->
+            <img src="assets/seal.svg" 
+                 alt="Sunflower Seal" 
+                 class="seal-img" 
+                 onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23ffc300\'/><circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%235d4037\'/><text x=\'50%\' y=\'52%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'20\'>❤️</text></svg>'">
+            
+            <div class="envelope">
+                <div class="letter shadow-2xl">
+                    <h2 class="cursive text-2xl md:text-3xl text-yellow-600 mb-4">My Mrs. Dlamini,</h2>
+                    <div class="text-gray-700 text-xs md:text-base leading-relaxed space-y-4 text-justify pr-2">
+                        <p>
+                            I love you, not just today, but forever, I am eternally grateful for you
+                            and the love you give me, everyday you show me love i thought only existed
+                            in fairytales, with you every day feels like im living my own true love story,
+                             i can't imagine living without you.
+                        </p>
+                        <p>
+                            I wanted to write this to let you know how much you mean to me. 
+                            Your smile make brighten ups my day, you voice calms my racing thought,
+                            Your presense brings me an unfathomable sense of peace, I'm so blessed to have you
+                            in my life.
+                        </p>
+                        <p>
+                            Thank you for being the best partner i could have ever asked for, thank you for
+                            supporting me through everything, and continuously standing by my side, 
+                            I can't wait to continue the journey with you and grow old together.
+                        </p>
+                        <p>
+                            I LOVE YOU SO SO MUCH MY MRS. DLAMINI, NOW AND FOREVER, AND EVER AND EVER, AMEN.
+                        </p>
+                    
+                        <p class="cursive text-xl md:text-2xl pt-4">
+                            Forever Yours,<br>
+                            <span class="text-yellow-600">Your Mr. Dlamini</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hint" class="mt-40 md:mt-48 text-yellow-700 italic text-sm opacity-70 bg-yellow-100 px-4 py-1 rounded-full">
+            Tap to open my heart
+        </div>
+    </div>
+
+    <script>
+        function toggleLetter(element) {
+            element.classList.toggle('opened');
+            const hint = document.getElementById('hint');
+            if(element.classList.contains('opened')) {
+                hint.innerText = "You're my everything ";
+                burstEffect();
+            } else {
+                hint.innerText = "Tap to open my heart";
+            }
+        }
+
+        function createFloatingItem(symbol) {
+            const container = document.getElementById('floating-container');
+            const item = document.createElement('div');
+            item.classList.add('floating-item');
+            
+            const icons = ['🌻', '❤️', '✨', '☀️', '💛'];
+            item.innerHTML = symbol || icons[Math.floor(Math.random() * icons.length)];
+            
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            item.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            
+            container.appendChild(item);
+            
+            setTimeout(() => {
+                item.remove();
+            }, 7000);
+        }
+
+        function burstEffect() {
+            for(let i = 0; i < 20; i++) {
+                setTimeout(() => createFloatingItem(), i * 40);
+            }
+        }
+
+        setInterval(() => createFloatingItem(), 1500);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const wrapper = document.querySelector('.envelope-wrapper');
+                if (wrapper) toggleLetter(wrapper);
+            }
+        });
+    </script>
+</body>
+</html>
