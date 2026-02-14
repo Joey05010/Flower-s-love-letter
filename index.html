@@ -81,14 +81,16 @@
             width: 280px;
             height: 180px;
             z-index: 30;
-            /* Ensure the wrapper itself stays centered in its flex container */
             flex-shrink: 0;
+            /* Shift up on mobile to account for letter expansion space */
+            transform: translateY(-20px);
         }
 
         @media (min-width: 768px) {
             .envelope-wrapper {
                 width: 320px;
                 height: 200px;
+                transform: translateY(0);
             }
         }
 
@@ -221,15 +223,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* PERFECT VERTICAL AND HORIZONTAL CENTERING */
+            justify-content: center;
             position: relative;
             z-index: 20;
         }
 
-        /* Fixed elements at top and bottom to allow the center to be truly centered */
         .top-heading {
             position: absolute;
-            top: 2rem;
+            top: 1.5rem;
             left: 0;
             width: 100%;
             text-align: center;
@@ -246,8 +247,8 @@
         }
 
         @media (min-width: 768px) {
-            .top-heading { top: 5rem; }
-            .bottom-hint { bottom: 5rem; }
+            .top-heading { top: 4rem; }
+            .bottom-hint { bottom: 4rem; }
         }
     </style>
 </head>
@@ -255,7 +256,6 @@
 
     <div id="floating-container"></div>
 
-    <!-- Sunflower Corner Assets -->
     <img src="assets/sufower ful.svg" 
          alt="Sunflower Left" 
          class="flower-corner flower-left" 
@@ -267,12 +267,10 @@
          onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%235d4037\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(0 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(45 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(90 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(135 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(180 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(225 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(270 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(315 50 50)\'/></svg>'">
 
     <div class="main-container">
-        <!-- Top Heading -->
         <div class="top-heading">
             <h1 class="serif text-3xl md:text-5xl text-yellow-700 drop-shadow-sm font-bold">Happy Valentines day my angel</h1>
         </div>
         
-        <!-- Centered Envelope -->
         <div class="envelope-wrapper" onclick="toggleLetter(this)">
             <img src="assets/seal.svg" 
                  alt="Sunflower Seal" 
@@ -312,7 +310,6 @@
             </div>
         </div>
 
-        <!-- Bottom Hint -->
         <div class="bottom-hint">
             <div id="hint" class="text-yellow-700 italic text-sm md:text-base opacity-90 bg-yellow-100 px-6 py-2 rounded-full shadow-sm font-medium">
                 Tap to open my heart
