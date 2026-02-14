@@ -84,14 +84,13 @@
             transition: transform 0.3s ease;
             width: 280px;
             height: 180px;
-            margin-top: -20px; 
+            margin-top: 0; 
         }
 
         @media (min-width: 768px) {
             .envelope-wrapper {
                 width: 320px;
                 height: 200px;
-                margin-top: 0;
             }
         }
 
@@ -226,9 +225,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between; /* Spreads content on mobile */
+            padding-top: 2rem;
+            padding-bottom: 2rem;
             position: relative;
             z-index: 20;
+        }
+
+        @media (min-width: 768px) {
+            .main-container {
+                justify-content: center;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
         }
     </style>
 </head>
@@ -248,7 +257,7 @@
          onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%235d4037\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(0 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(45 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(90 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(135 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(180 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(225 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(270 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(315 50 50)\'/></svg>'">
 
     <div class="main-container">
-        <h1 class="serif text-2xl md:text-5xl text-yellow-700 mb-8 md:mb-16 drop-shadow-sm px-6 text-center">A Bright Note for My Sunshine</h1>
+        <h1 class="serif text-2xl md:text-5xl text-yellow-700 md:mb-16 drop-shadow-sm px-6 text-center">Happy Valentines day my angel</h1>
         
         <div class="envelope-wrapper" onclick="toggleLetter(this)">
             <img src="assets/seal.svg" 
@@ -289,7 +298,7 @@
             </div>
         </div>
 
-        <div id="hint" class="mt-8 md:mt-48 text-yellow-700 italic text-xs md:text-sm opacity-70 bg-yellow-100 px-4 py-1 rounded-full">
+        <div id="hint" class="md:mt-48 text-yellow-700 italic text-xs md:text-sm opacity-70 bg-yellow-100 px-4 py-1 rounded-full">
             Tap to open my heart
         </div>
     </div>
