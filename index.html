@@ -16,7 +16,6 @@
         }
 
         body {
-            /* Updated to a soft Yellow-White Gradient */
             background: radial-gradient(circle at center, #ffffff 0%, #fff9db 70%, #fff4ad 100%);
             font-family: 'Poppins', sans-serif;
             overflow: hidden; 
@@ -32,7 +31,6 @@
         .cursive { font-family: 'Dancing Script', cursive; }
         .serif { font-family: 'Playfair Display', serif; }
 
-        /* Floating Sunflowers & Hearts Animation */
         .floating-item {
             position: fixed;
             pointer-events: none;
@@ -48,7 +46,6 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Flower Styling - Scaled for mobile */
         .flower-corner {
             position: fixed;
             bottom: -5px;
@@ -77,14 +74,15 @@
             to { transform: scaleX(-1) rotate(5deg) translateY(-5px); }
         }
 
-        /* Envelope Styling - Responsive sizing */
         .envelope-wrapper {
             position: relative;
             cursor: pointer;
             transition: transform 0.3s ease;
             width: 280px;
             height: 180px;
-            margin-top: 0; 
+            z-index: 30;
+            /* Ensure the wrapper itself stays centered in its flex container */
+            flex-shrink: 0;
         }
 
         @media (min-width: 768px) {
@@ -153,7 +151,7 @@
             background: white;
             z-index: 1;
             transition: all 0.5s ease-in-out;
-            padding: 15px;
+            padding: 20px 15px;
             text-align: center;
             border-radius: 5px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
@@ -165,7 +163,7 @@
         }
 
         @media (min-width: 768px) {
-            .letter { padding: 25px; top: 10px; left: 10px; right: 10px; bottom: 10px; }
+            .letter { padding: 35px 25px; top: 10px; left: 10px; right: 10px; bottom: 10px; }
         }
 
         .opened .envelope::before {
@@ -175,7 +173,7 @@
 
         .opened .letter {
             transform: translateY(-130px);
-            height: 380px;
+            height: 420px;
             z-index: 5;
             opacity: 1;
             overflow-y: auto;
@@ -184,7 +182,7 @@
         @media (min-width: 768px) {
             .opened .letter {
                 transform: translateY(-160px);
-                height: 480px;
+                height: 520px;
             }
         }
 
@@ -219,25 +217,37 @@
 
         .main-container {
             width: 100%;
-            height: 100%;
-            max-width: 100vw;
-            max-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* Spreads content on mobile */
-            padding-top: 2rem;
-            padding-bottom: 2rem;
+            justify-content: center; /* PERFECT VERTICAL AND HORIZONTAL CENTERING */
             position: relative;
             z-index: 20;
         }
 
+        /* Fixed elements at top and bottom to allow the center to be truly centered */
+        .top-heading {
+            position: absolute;
+            top: 2rem;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 0 1.5rem;
+        }
+
+        .bottom-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
         @media (min-width: 768px) {
-            .main-container {
-                justify-content: center;
-                padding-top: 0;
-                padding-bottom: 0;
-            }
+            .top-heading { top: 5rem; }
+            .bottom-hint { bottom: 5rem; }
         }
     </style>
 </head>
@@ -257,8 +267,12 @@
          onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'%235d4037\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(0 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(45 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(90 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(135 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(180 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(225 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(270 50 50)\'/><path d=\'M50 10 L60 40 L50 45 L40 40 Z\' fill=\'%23ffc300\' transform=\'rotate(315 50 50)\'/></svg>'">
 
     <div class="main-container">
-        <h1 class="serif text-2xl md:text-5xl text-yellow-700 md:mb-16 drop-shadow-sm px-6 text-center">Happy Valentines day my angel</h1>
+        <!-- Top Heading -->
+        <div class="top-heading">
+            <h1 class="serif text-3xl md:text-5xl text-yellow-700 drop-shadow-sm font-bold">Happy Valentines day my angel</h1>
+        </div>
         
+        <!-- Centered Envelope -->
         <div class="envelope-wrapper" onclick="toggleLetter(this)">
             <img src="assets/seal.svg" 
                  alt="Sunflower Seal" 
@@ -267,29 +281,29 @@
             
             <div class="envelope">
                 <div class="letter shadow-2xl">
-                    <h2 class="cursive text-xl md:text-3xl text-yellow-600 mb-2 md:mb-4">My Mrs. Dlamini,</h2>
-                    <div class="text-gray-700 text-[11px] md:text-base leading-relaxed space-y-2 md:space-y-4 text-justify pr-1">
+                    <h2 class="cursive text-2xl md:text-4xl text-yellow-600 mb-4 md:mb-6">My Mrs. Dlamini,</h2>
+                    <div class="text-gray-800 text-[15px] md:text-lg leading-relaxed space-y-4 md:space-y-6 text-justify pr-1">
                         <p>
-                            I love you, not just today, but forever, I am eternally grateful for you
-                            and the love you give me, everyday you show me love i thought only existed
-                            in fairytales, with you every day feels like im living my own true love story,
-                             i can't imagine living without you.
+                            I love you, not just today, but forever. I am eternally grateful for you
+                            and the love you give me. Everyday you show me love I thought only existed
+                            in fairytales. With you, every day feels like I'm living my own true love story.
+                             I can't imagine living without you.
                         </p>
                         <p>
                             I wanted to write this to let you know how much you mean to me. 
-                            Your smile make brighten ups my day, you voice calms my racing thought,
-                            Your presense brings me an unfathomable sense of peace, I'm so blessed to have you
+                            Your smile brightens up my day, your voice calms my racing thoughts.
+                            Your presence brings me an unfathomable sense of peace. I'm so blessed to have you
                             in my life.
                         </p>
                         <p>
-                            Thank you for being the best partner i could have ever asked for, thank you for
-                            supporting me through everything, and continuously standing by my side, 
+                            Thank you for being the best partner I could have ever asked for. Thank you for
+                            supporting me through everything, and continuously standing by my side. 
                             I can't wait to continue the journey with you and grow old together.
                         </p>
-                        <p>
+                        <p class="font-bold text-yellow-900 leading-tight">
                             I LOVE YOU SO SO MUCH MY MRS. DLAMINI, NOW AND FOREVER, AND EVER AND EVER, AMEN.
                         </p>
-                        <p class="cursive text-lg md:text-2xl pt-2">
+                        <p class="cursive text-xl md:text-3xl pt-4 border-t border-yellow-100">
                             Forever Yours,<br>
                             <span class="text-yellow-600">Your Mr. Dlamini</span>
                         </p>
@@ -298,8 +312,11 @@
             </div>
         </div>
 
-        <div id="hint" class="md:mt-48 text-yellow-700 italic text-xs md:text-sm opacity-70 bg-yellow-100 px-4 py-1 rounded-full">
-            Tap to open my heart
+        <!-- Bottom Hint -->
+        <div class="bottom-hint">
+            <div id="hint" class="text-yellow-700 italic text-sm md:text-base opacity-90 bg-yellow-100 px-6 py-2 rounded-full shadow-sm font-medium">
+                Tap to open my heart
+            </div>
         </div>
     </div>
 
